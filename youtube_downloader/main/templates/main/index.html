@@ -1,0 +1,43 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Youtube downloader</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-inline justify-content-center">
+                {{ searchform.search_field }}
+                <input class="btn btn-primary" type="submit" name="submit_button" value="Submit">
+            </div>
+        </form>
+        {% if videos %}
+        <div class="row mb-2">
+        {% for video in videos %}
+            <div class="col-md-6">
+              <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative" style="height:250px;">
+                <div class="col p-4 d-flex flex-column position-static">
+                  <a href="{{video.watch_url}}"><h5 class="mb-0">{{ video.title|truncatechars:35 }}</h5></a>
+                  <a href="{{video.channel_url}}"><div class="mb-1 text-muted">{{ video.author }}</div></a>
+                  <p class="card-text mb-auto">{{ video.description|truncatechars:96}}</p>
+                  <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                <div class="col-auto" style="padding-top:45px;">
+                    <img src="{{video.thumbnail_url}}" alt="Thumbnail" class="img-thumbnail" width="195px">
+<!--                  <svg class="bd-placeholder-img" width="160" height="90" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>-->
+                </div>
+              </div>
+            </div>
+        {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+
+
